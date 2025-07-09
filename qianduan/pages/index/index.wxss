@@ -1,0 +1,120 @@
+/* 背景渐变 */
+.index-bg {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #6a8dfc 0%, #6ed6cb 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 40rpx;
+}
+
+/* 轮播图卡片 */
+.banner-card {
+  width: 100vw;
+  margin-top: 0rpx;
+  border-radius: 8rpx;
+  overflow: hidden;
+  box-shadow: 0 8rpx 32rpx rgba(80, 120, 200, 0.10);
+  background: #fff;
+}
+.banner-img {
+  width: 100%;
+  height: 200px;
+  display: block;
+}
+
+
+/* 消息通知卡片样式 */
+.notice-bar {
+  width: 92vw;
+  margin: 24rpx auto 0 auto;
+  background: #f6fafe; /* 柔和蓝色背景 */
+  border-radius: 28rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0 20rpx;
+  height: 56rpx;
+  box-shadow: 0 2rpx 6rpx rgba(80,120,200,0.04); /* 更轻的阴影 */
+}
+
+.notice-icon-bg {
+  width: 38rpx;
+  height: 38rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #a3c9f9 0%, #e0e7ef 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 14rpx;
+}
+
+.notice-icon {
+  width: 22rpx;
+  height: 22rpx;
+  display: block;
+}
+
+.notice-text {
+  font-size: 18rpx;
+  color: #4a5a6a;
+  flex: 1;
+  font-weight: 400;
+  letter-spacing: 1rpx;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 菜单卡片 */
+.menu-card {
+  width: 99vw;
+  background: #fff;
+  border-radius: 12rpx;
+  box-shadow: 0 6rpx 18rpx rgba(80, 120, 200, 0.08); /* 轻微阴影 */
+  padding: 28rpx 0;
+  margin-top: 14rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.menu-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
+  margin-bottom: 60rpx;
+}
+
+.menu-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100rpx; /* 减小按钮宽度，避免过大 */
+  margin: 0 12rpx;
+}
+
+.menu-icon {
+  width: 90rpx; /* 减小图标尺寸 */
+  height: 90rpx;
+  margin-bottom: 10rpx;
+}
+
+.menu-label {
+  font-size: 24rpx; /* 小号字体 */
+  color: #4f46e5; /* 保持一致的字体颜色 */
+  font-weight: 500;
+}
+
+/* 添加按钮悬浮效果 */
+.menu-btn:active .menu-icon {
+  transform: scale(1.3); /* 点击时放大效果 */
+  transition: transform 0.3s ease;
+}
+
+
+.menu-btn:hover .menu-label {
+  color: #1e3a8a; /* 字体颜色变更 */
+  transition: color 0.2s ease;
+}

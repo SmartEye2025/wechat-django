@@ -1,0 +1,51 @@
+<!-- 背景渐变容器 -->
+<view class="index-bg">
+  <!-- 轮播图 -->
+  <view class="banner-card">
+    <swiper autoplay indicator-dots style="height: 200px;">
+      <swiper-item><image src="/images/banners/banner1.png" mode="aspectFill" class="banner-img"/></swiper-item>
+      <swiper-item><image src="/images/banners/banner2.png" mode="aspectFill" class="banner-img"/></swiper-item>
+      <swiper-item><image src="/images/banners/banner3.png" mode="aspectFill" class="banner-img"/></swiper-item>
+    </swiper>
+  </view>
+
+ <!-- 通知消息卡片 -->
+ <view class="notice-bar">
+  <view class="notice-icon-bg">
+    <image src="/images/notice.png" class="notice-icon" mode="aspectFit"/>
+  </view>
+  <text class="notice-text">欢迎使用智能监控系统</text>
+</view>
+
+  <!-- 功能菜单卡片 -->
+  <view class="menu-card">
+    <view class="menu-row">
+      <view class="menu-btn">
+        <image src="/images/menu/公告.png" class="menu-icon"/>
+        <text class="menu-label">公告</text>
+      </view>
+      <view class="menu-btn">
+        <image src="/images/menu/班级登记.png" class="menu-icon"/>
+        <text class="menu-label">班级登记</text>
+      </view>
+      <view class="menu-btn">
+        <image src="/images/menu/课堂考勤.png" class="menu-icon"/>
+        <text class="menu-label">课堂考勤</text>
+      </view>
+    </view>
+    <view class="menu-row">
+      <view class="menu-btn">
+        <image src="/images/menu/评价.png" class="menu-icon"/>
+        <text class="menu-label">评价</text>
+      </view>
+      <view class="menu-btn">
+        <image src="/images/menu/请假.png" class="menu-icon"/>
+        <text class="menu-label">请假</text>
+      </view>
+      <view class="menu-btn">
+        <image src="/images/menu/消息.png" class="menu-icon"/>
+        <text class="menu-label">消息</text>
+      </view>
+    </view>
+  </view>
+</view>
