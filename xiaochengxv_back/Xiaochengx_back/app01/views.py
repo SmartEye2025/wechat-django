@@ -4,13 +4,17 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 from django.utils import timezone
-from .models import User
+from rest_framework_simplejwt.models import TokenUser
 
+from .models import ParentStudentBinding
+from .models import User
+from .models import Student
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
+
 
 import json
 import random
@@ -311,3 +315,316 @@ def get_user_info(request):
         })
     except Exception as e:
         return JsonResponse({'code': 500, 'message': str(e)})
+
+@csrf_exempt
+def bind_student(request):
+    """用户绑定学生账号"""
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            username = data.get('username')  # 使用用户名
+            student_id = data.get('student_id')
+
+            if not username or not student_id:
+                return JsonResponse({
+                    'status': 'error',
+                    'message': '缺少必要参数'
+                }, status=400)
+
+            # 获取用户对象
+            try:
+                user = User.objects.get(username=username)
+            except User.DoesNotExist:
+                return JsonResponse({
+                    'status': 'error',
+                    'message': '用户不存在'
+                }, status=404)
+
+            # 检查用户是否已经绑定了其他学生
+            if ParentStudentBinding.objects.filter(user=user, is_active=True).exists():
+                return JsonResponse({
+                    'status': 'error',
+                    'message': '您已经绑定了一个孩子，一个用户只能绑定一个孩子'
+                }, status=400)
+
+            # 检查学生是否已经被其他用户绑定
+            if ParentStudentBinding.objects.filter(student_id=student_id, is_active=True).exists():
+                return JsonResponse({
+                    'status': 'error',
+                    'message': '该学号已经被其他用户绑定'
+                }, status=400)
+
+            # 检查学生是否存在
+            try:
+                student = Student.objects.get(student_id=student_id)
+                student_name = student.name
+            except Student.DoesNotExist:
+                return JsonResponse({
+                    'status': 'error',
+                    'message': '未找到该学号对应的学生'
+                }, status=404)
+
+            # 创建绑定关系
+            existing_binding = ParentStudentBinding.objects.filter(user=user, student_id=student_id).first()
+
+            if existing_binding:
+                # 如果有之前的绑定记录，重新激活它
+                existing_binding.is_active = True
+                existing_binding.student_name = student_name  # 更新学生姓名，以防学生信息有变更
+                existing_binding.save()
+                binding = existing_binding
+            else:
+                # 如果没有之前的绑定记录，创建新的绑定关系
+                binding = ParentStudentBinding.objects.create(
+                    user=user,
+                    student_id=student_id,
+                    student_name=student_name
+                )
+
+            return JsonResponse({
+                'status': 'success',
+                'message': '绑定成功',
+                'data': {
+                    'has_binding': True,
+                    'username': user.username,
+                    'student_id': student_id,
+                    'student_name': student_name
+                }
+            })
+
+        except Exception as e:
+            return JsonResponse({
+                'status': 'error',
+                'message': str(e)
+            }, status=500)
+
+    return JsonResponse({'status': 'error', 'message': '无效请求'}, status=405)
+
+
+
+@csrf_exempt
+def unbind_student(request):
+    """解除用户学生绑定关系"""
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            username = data.get('username')
+
+            if not username:
+                return JsonResponse({
+                    'status': 'error',
+                    'message': '缺少必要参数'
+                }, status=400)
+
+            # 获取用户对象
+            try:
+                user = User.objects.get(username=username)
+            except User.DoesNotExist:
+                return JsonResponse({
+                    'status': 'error',
+                    'message': '用户不存在'
+                }, status=404)
+
+            # 查找并解除绑定关系
+            try:
+                binding = ParentStudentBinding.objects.get(user=user, is_active=True)
+                binding.is_active = False
+                binding.save()
+
+                return JsonResponse({
+                    'status': 'success',
+                    'message': '解除绑定成功'
+                })
+            except ParentStudentBinding.DoesNotExist:
+                return JsonResponse({
+                    'status': 'error',
+                    'message': '未找到绑定关系'
+                }, status=400)
+
+        except Exception as e:
+            return JsonResponse({
+                'status': 'error',
+                'message': str(e)
+            }, status=500)
+
+    return JsonResponse({'status': 'error', 'message': '无效请求'}, status=405)
+
+
+@csrf_exempt
+def get_binding_info(request):
+    """获取绑定关系信息"""
+    if request.method == 'GET':
+        try:
+            username = request.GET.get('username')
+
+            if not username:
+                return JsonResponse({
+                    'status': 'error',
+                    'message': '缺少必要参数'
+                }, status=400)
+
+            # 获取用户对象
+            try:
+                user = User.objects.get(username=username)
+            except User.DoesNotExist:
+                return JsonResponse({
+                    'status': 'error',
+                    'message': '用户不存在'
+                }, status=404)
+
+            # 查询用户绑定的学生
+            try:
+                binding = ParentStudentBinding.objects.get(user=user, is_active=True)
+                return JsonResponse({
+                    'status': 'success',
+                    'data': {
+                        'has_binding': True,
+                        'student_id': binding.student_id,
+                        'student_name': binding.student_name,
+                        'binding_time': binding.created_at.strftime('%Y-%m-%d %H:%M:%S')
+                    }
+                })
+            except ParentStudentBinding.DoesNotExist:
+                return JsonResponse({
+                    'status': 'success',
+                    'data': {
+                        'has_binding': False
+                    }
+                })
+
+        except Exception as e:
+            return JsonResponse({
+                'status': 'error',
+                'message': str(e)
+            }, status=500)
+
+    return JsonResponse({'status': 'error', 'message': '无效请求'}, status=405)
+
+
+@csrf_exempt
+def add_student(request):
+    """添加学生信息"""
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            student_id = data.get('student_id')
+            name = data.get('name')
+            grade = data.get('grade', '')
+            class_name = data.get('class_name', '')
+
+            if not student_id or not name:
+                return JsonResponse({
+                    'status': 'error',
+                    'message': '学号和姓名不能为空'
+                }, status=400)
+
+            # 检查学号是否已存在
+            if Student.objects.filter(student_id=student_id).exists():
+                return JsonResponse({
+                    'status': 'error',
+                    'message': '该学号已存在'
+                }, status=400)
+
+            # 创建学生记录
+            student = Student.objects.create(
+                student_id=student_id,
+                name=name,
+                grade=grade,
+                class_name=class_name
+            )
+
+            return JsonResponse({
+                'status': 'success',
+                'message': '学生信息添加成功',
+                'data': {
+                    'student_id': student.student_id,
+                    'name': student.name,
+                    'grade': student.grade,
+                    'class_name': student.class_name
+                }
+            })
+
+        except Exception as e:
+            return JsonResponse({
+                'status': 'error',
+                'message': str(e)
+            }, status=500)
+
+    return JsonResponse({'status': 'error', 'message': '无效请求'}, status=405)
+
+
+@csrf_exempt
+def get_student_info(request):
+    """根据学号获取学生信息"""
+    if request.method == 'GET':
+        try:
+            student_id = request.GET.get('student_id')
+
+            if not student_id:
+                return JsonResponse({
+                    'status': 'error',
+                    'message': '缺少学号参数'
+                }, status=400)
+
+            try:
+                student = Student.objects.get(student_id=student_id)
+                return JsonResponse({
+                    'status': 'success',
+                    'data': {
+                        'student_id': student.student_id,
+                        'name': student.name,
+                        'grade': student.grade,
+                        'class_name': student.class_name
+                    }
+                })
+            except Student.DoesNotExist:
+                return JsonResponse({
+                    'status': 'error',
+                    'message': '未找到该学号对应的学生'
+                }, status=404)
+
+        except Exception as e:
+            return JsonResponse({
+                'status': 'error',
+                'message': str(e)
+            }, status=500)
+
+    return JsonResponse({'status': 'error', 'message': '无效请求'}, status=405)
+
+
+@csrf_exempt
+def list_students(request):
+    """获取学生列表"""
+    if request.method == 'GET':
+        try:
+            grade = request.GET.get('grade')
+            class_name = request.GET.get('class_name')
+
+            students = Student.objects.all()
+
+            if grade:
+                students = students.filter(grade=grade)
+            if class_name:
+                students = students.filter(class_name=class_name)
+
+            students_data = []
+            for student in students:
+                students_data.append({
+                    'student_id': student.student_id,
+                    'name': student.name,
+                    'grade': student.grade,
+                    'class_name': student.class_name
+                })
+
+            return JsonResponse({
+                'status': 'success',
+                'data': students_data
+            })
+
+        except Exception as e:
+            return JsonResponse({
+                'status': 'error',
+                'message': str(e)
+            }, status=500)
+
+    return JsonResponse({'status': 'error', 'message': '无效请求'}, status=405)

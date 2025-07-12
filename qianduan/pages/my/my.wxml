@@ -24,8 +24,22 @@
     </view>
   </view>
 
+  <view class = "binding-status" wx:if="{{userInfo && bindingInfo.has_binding}}">
+      <view class="binding-title">已绑定孩子</view>
+      <view class="binding-content">
+      <text class="student-id">学号: {{bindingInfo.student_id}}</text>
+      <text class="student-name">姓名: {{bindingInfo.student_name}}</text>
+      <button class="unbind-btn" bindtap="unbindStudent">解除绑定</button>
+      </view>
+    </view>
+
   
   <view class="action-section">
+    <view class="action-item" bindtap="bindStudent">
+      <text>{{bindingInfo.has_binding ? '查看绑定信息' : '绑定孩子'}}</text>
+      <text class="iconfont icon-right"></text>
+    </view>
+
     <view class="action-item" bindtap="editNickname">
       <text>修改昵称</text>
       <text class="iconfont icon-right"></text>

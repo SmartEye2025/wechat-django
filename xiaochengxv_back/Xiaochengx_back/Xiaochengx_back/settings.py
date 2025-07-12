@@ -82,9 +82,9 @@ ASGI_APPLICATION = 'Xiaochengx_back.asgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': '',  # 数据库名称待完善
-        'USER': '',  # 数据库用户名待完善
-        'PASSWORD': '',  # 数据库密码待完善
+        'NAME': 'new_xiaochengxu_db',  # 数据库名称
+        'USER': 'root',  # 数据库用户名
+        'PASSWORD': '1346286832LYS',  # 数据库密码
         'HOST': 'localhost',
         'PORT': '3306',
     }

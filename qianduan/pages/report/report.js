@@ -5,7 +5,7 @@ Page({
     // 筛选
     timeRanges: ['本周', '上周', '本月'],
     timeIndex: 0,
-    classes: ['全部学科', '语文', '数学','外语','美术'],
+    classes: ['全部学科', '语文', '数学', '外语', '美术'],
     classIndex: 0,
     // 统计卡片
     focusTime: 32,
@@ -14,12 +14,7 @@ Page({
     leaveTrend: -3.1,
     interveneRate: 82,
     interveneTrend: 2.4,
-    // 排名
-    rankList: [
-      { name: '张三', focus: 40, divert: 2 },
-      { name: '李四', focus: 38, divert: 3 },
-      { name: '王五', focus: 35, divert: 4 }
-    ],
+
     // 图表配置
     ecBar: {
       onInit: function (canvas, width, height, dpr) {
@@ -31,9 +26,9 @@ Page({
           legend: { data: ['专注时长(分钟)', '分心次数'] },
           xAxis: { data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'] },
           yAxis: {
-            interval:50,
-            axisLabel:{
-              fontSize:8
+            interval: 50,
+            axisLabel: {
+              fontSize: 8
             }
           },
           series: [
