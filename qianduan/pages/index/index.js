@@ -1,2 +1,11 @@
 // index.js
-Page({})
+Page({
+  goReport (){
+    wx.navigateTo({
+      url:'/pages/report/report'
+    });
+
+    
+
+  }
+});

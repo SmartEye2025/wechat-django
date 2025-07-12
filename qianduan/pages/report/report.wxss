@@ -1,0 +1,94 @@
+.report-bg {
+  background: #f7f8fa;
+  min-height: 100vh;
+  padding-bottom: 40rpx;
+}
+.report-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  margin: 32rpx 0 16rpx 32rpx;
+}
+.filter-bar {
+  display: flex;
+  align-items: center;
+  margin: 0 32rpx 24rpx 32rpx;
+}
+.filter-item {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 8rpx 24rpx;
+  margin-right: 16rpx;
+  font-size: 22rpx;
+  color: #333;
+  box-shadow: 0 2rpx 8rpx rgba(80,120,200,0.04);
+}
+.filter-btn {
+  
+  background: linear-gradient(to right, #b3e4b5, #5fad63); /* 渐变背景 */
+  color: white; 
+  font-size: 22rpx; 
+  padding: 12rpx 30rpx; 
+  border: none; 
+  border-radius: 25rpx; 
+  cursor: pointer; 
+  transition: all 0.3s ease; 
+  text-align: center; 
+  display: inline-block; 
+  margin-left: 10rpx; 
+}
+
+.filter-btn:hover {
+  box-shadow: 0 4rpx 10rpx rgba(0, 0, 0, 0.2); 
+}
+
+.filter-btn:active {
+  transform: scale(0.98); /* 按钮按下时略微缩小 */
+}
+.stat-cards {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 32rpx 24rpx 32rpx;
+}
+.stat-card {
+  width:48%;
+  background: #fff;
+  border-radius: 16rpx;
+  margin-right: 16rpx;
+  padding: 24rpx 0;
+  text-align: center;
+  box-shadow: 0 2rpx 8rpx rgba(80,120,200,0.04);
+}
+.stat-card:last-child { margin-right: 0; }
+.stat-title { font-size: 20rpx; color: #888; }
+.stat-value { font-size: 26rpx; font-weight: bold; color: #222; margin: 8rpx 0;  }
+.stat-trend { font-size: 18rpx; display: block;}
+.positive { color: #4caf50; }
+.negative { color: #f44336; }
+
+
+.charts-column {
+  display: flex;
+  flex-direction: column;   /* 纵向排列 */
+  gap: 24rpx; 
+  margin: 0 2rpx 2rpx 0rpx;
+}
+.chart-box {
+  flex: 1;
+  background: #fff;
+  border-radius: 16rpx;
+  margin-right: 16rpx;
+
+       
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 2rpx 8rpx rgba(80,120,200,0.04);
+}
+.chart-box:last-child { margin-right: 0; padding-bottom: 70rpx; }
+.chart-title { 
+  font-size: 20rpx; 
+  color: #888; 
+  margin-top: 20rpx;
+  margin-left: 24rpx; 
+  margin-bottom: 10rpx; 
+}
+

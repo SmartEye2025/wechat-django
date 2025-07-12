@@ -1,0 +1,49 @@
+<view class="report-bg">
+  <!-- 标题 -->
+  <view class="report-title">学生注意力数据分析</view>
+
+  <!-- 筛选栏 -->
+  <view class="filter-bar">
+    <picker mode="selector" range="{{timeRanges}}" value="{{timeIndex}}" bindchange="onTimeChange">
+      <view class="filter-item">{{timeRanges[timeIndex]}}</view>
+    </picker>
+    <picker mode="selector" range="{{classes}}" value="{{classIndex}}" bindchange="onClassChange">
+      <view class="filter-item">{{classes[classIndex]}}</view>
+    </picker>
+    <button class="filter-btn"   bindtap="onFilter" >应用筛选</button>
+  </view>
+
+  <!-- 统计卡片 -->
+  <view class="stat-cards">
+    <view class="stat-card">
+      <text class="stat-title">平均专注时长</text>
+      <text class="stat-value">{{focusTime}}分钟</text>
+      <text class="stat-trend positive">+{{focusTrend}}%</text>
+    </view>
+    <view class="stat-card">
+      <text class="stat-title">离座次数</text>
+      <text class="stat-value">{{leaveCount}}</text>
+      <text class="stat-trend negative">{{leaveTrend}}%</text>
+    </view>
+    <view class="stat-card">
+      <text class="stat-title">干预成功率</text>
+      <text class="stat-value">{{interveneRate}}%</text>
+      <text class="stat-trend positive">+{{interveneTrend}}%</text>
+    </view>
+  </view>
+
+  <!-- 图表区 -->
+  <view class="charts-column">
+    <view class="chart-box">
+      <text class="chart-title">课堂专注力统计</text>
+      <ec-canvas id="barChart" canvas-id="barChart" ec="{{ecBar}}" style="width:100%;height:400rpx;"></ec-canvas>
+    </view>
+    <view class="chart-box">
+      <text class="chart-title">学生行为统计</text>
+      <ec-canvas id="pieChart" canvas-id="pieChart" ec="{{ecPie}}"  style="width:100%;height:400rpx;"></ec-canvas>
+    </view>
+  </view>
+
+
+
+</view>

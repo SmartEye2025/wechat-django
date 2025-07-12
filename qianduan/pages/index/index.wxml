@@ -25,12 +25,12 @@
         <text class="menu-label">公告</text>
       </view>
       <view class="menu-btn">
-        <image src="/images/menu/班级登记.png" class="menu-icon"/>
-        <text class="menu-label">班级登记</text>
+        <image src="/images/menu/作业.png" class="menu-icon"/>
+        <text class="menu-label">作业</text>
       </view>
-      <view class="menu-btn">
-        <image src="/images/menu/课堂考勤.png" class="menu-icon"/>
-        <text class="menu-label">课堂考勤</text>
+      <view class="menu-btn" bind:tap="goReport">
+        <image src="/images/menu/统计.png" class="menu-icon" />
+        <text class="menu-label">学情报告</text>
       </view>
     </view>
     <view class="menu-row">

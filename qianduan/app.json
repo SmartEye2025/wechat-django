@@ -4,7 +4,8 @@
     "pages/login/login",
     "pages/register/register",
     "pages/my/my",
-    "pages/classroomMonitor/classroomMonitor"
+    "pages/classroomMonitor/classroomMonitor",
+    "pages/report/report"
   ],
   "window": {
     "backgroundTextStyle": "light",
