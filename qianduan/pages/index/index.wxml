@@ -24,7 +24,7 @@
         <image src="/images/menu/公告.png" class="menu-icon"/>
         <text class="menu-label">公告</text>
       </view>
-      <view class="menu-btn">
+      <view class="menu-btn" bind:tap="goHomework">
         <image src="/images/menu/作业.png" class="menu-icon"/>
         <text class="menu-label">作业</text>
       </view>

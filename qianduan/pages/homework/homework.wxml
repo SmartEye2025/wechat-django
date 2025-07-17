@@ -1,0 +1,126 @@
+<!--pages/homework/homework.wxml-->
+<view class="container">
+  <!-- 顶部标题 -->
+  <view class="header">
+    <text class="title">特殊教育学习任务</text>
+  </view>
+
+  <!-- 科目分类 -->
+  <view class="subject-tabs">
+    <view class="tab active">
+      <text>全部</text>
+    </view>
+    <view class="tab">
+      <text>语文</text>
+    </view>
+    <view class="tab">
+      <text>数学</text>
+    </view>
+    <view class="tab">
+      <text>生活技能</text>
+    </view>
+    <view class="tab">
+      <text>社交能力</text>
+    </view>
+  </view>
+
+  <!-- 作业列表 -->
+  <view class="homework-list">
+    <!-- 语文作业 -->
+    <view class="homework-card">
+      <view class="homework-header">
+        <view class="homework-subject chinese">语文</view>
+        <view class="homework-difficulty level-1">
+          <text>难度: 简单</text>
+        </view>
+      </view>
+      <view class="homework-title">
+        <image class="subject-icon" src="/images/notice.png"></image>
+        <text>认识生活中的常见汉字</text>
+      </view>
+      <view class="homework-content">通过课本1-2页图片识别日常生活中的常见汉字，包括"水"、"火"、"门"等。</view>
+      <view class="homework-footer">
+        <view class="deadline">
+          <text>截止: 2025-09-15 18:00</text>
+        </view>
+        <view class="status pending">
+          <text>待完成</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 数学作业 -->
+    <view class="homework-card">
+      <view class="homework-header">
+        <view class="homework-subject math">数学</view>
+        <view class="homework-difficulty level-1">
+          <text>难度: 简单</text>
+        </view>
+      </view>
+      <view class="homework-title">
+        <image class="subject-icon" src="/images/notice.png"></image>
+        <text>数字1-5的认识与书写</text>
+      </view>
+      <view class="homework-content">通过有趣的游戏认识数字1-5，并练习书写这些数字。</view>
+      <view class="homework-footer">
+        <view class="deadline">
+          <text>截止: 2025-10-16 18:00</text>
+        </view>
+        <view class="status submitted">
+          <text>已提交</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 生活技能作业 -->
+    <view class="homework-card">
+      <view class="homework-header">
+        <view class="homework-subject life">生活技能</view>
+        <view class="homework-difficulty level-2">
+          <text>难度: 中等</text>
+        </view>
+      </view>
+      <view class="homework-title">
+        <image class="subject-icon" src="/images/notice.png"></image>
+        <text>学习系鞋带</text>
+      </view>
+      <view class="homework-content">通过课本6-10页分步骤图片学习如何系鞋带，每天练习10分钟。</view>
+      <view class="homework-footer">
+        <view class="deadline">
+          <text>截止: 2024-07-20 18:00</text>
+        </view>
+        <view class="status completed">
+          <text>已完成</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 社交能力作业 -->
+    <view class="homework-card">
+      <view class="homework-header">
+        <view class="homework-subject social">社交能力</view>
+        <view class="homework-difficulty level-3">
+          <text>难度: 挑战</text>
+        </view>
+      </view>
+      <view class="homework-title">
+        <image class="subject-icon" src="/images/notice.png"></image>
+        <text>表情识别练习</text>
+      </view>
+      <view class="homework-content">识别不同的面部表情，并理解它们代表的情绪。包括：开心、难过、生气、惊讶。</view>
+      <view class="homework-footer">
+        <view class="deadline">
+          <text>截止: 2024-07-18 18:00</text>
+        </view>
+        <view class="status overdue">
+          <text>已逾期</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部提示 -->
+  <view class="footer-tip">
+    <text>完成作业可以获得小星星奖励哦！</text>
+  </view>
+</view>

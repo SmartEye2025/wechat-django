@@ -12,8 +12,8 @@ Page({
     focusTrend: 5.2,
     leaveCount: 18,
     leaveTrend: -3.1,
-    interveneRate: 82,
-    interveneTrend: 2.4,
+    handupRate: 3,
+    handupTrend: 50,
 
     // 图表配置
     ecBar: {
@@ -23,17 +23,17 @@ Page({
         var option = {
           color: ['#6a8dfc', '#f7b7a3'],
           tooltip: {},
-          legend: { data: ['专注时长(分钟)', '分心次数'] },
+          legend: { data: ['专注时长(小时)', '分心次数'] },
           xAxis: { data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'] },
           yAxis: {
-            interval: 50,
+            interval: 2,
             axisLabel: {
               fontSize: 8
             }
           },
           series: [
-            { name: '专注时长(分钟)', type: 'bar', data: [220, 182, 191, 134, 90, 230, 210] },
-            { name: '分心次数', type: 'bar', data: [12, 14, 10, 8, 6, 9, 7] }
+            { name: '专注时长(小时)', type: 'line', smooth: true, data: [4.6, 2.4, 6, 4.6, 7.2, 5.6, 4.8] },
+            { name: '分心次数', type: 'line', smooth: true, data: [12, 16, 10, 8, 6, 9, 7] }
           ]
         };
         chart.setOption(option);
@@ -47,9 +47,9 @@ Page({
         var option = {
           color: ['#6a8dfc', '#f7b7a3', '#ffe082', '#b2dfdb', '#ffd54f'],
           tooltip: { trigger: 'item' },
-          legend: { orient: 'vertical', left: 'left', data: ['站立', '离座', '跑动', '东张西望', '下蹲'] },
+          legend: { orient: 'vertical', left: 'left', data: ['频繁扭动', '离开座位', '座位打闹', '四处跑动', '下蹲'] },
           series: [{
-            name: '行为统计',
+            name: '注意力情况',
             type: 'pie',
             radius: ['50%', '70%'],
             avoidLabelOverlap: false,
@@ -57,10 +57,10 @@ Page({
             emphasis: { label: { show: true, fontSize: '18', fontWeight: 'bold' } },
             labelLine: { show: false },
             data: [
-              { value: 10, name: '站立' },
-              { value: 5, name: '离座' },
-              { value: 2, name: '跑动' },
-              { value: 7, name: '东张西望' },
+              { value: 10, name:'频繁扭动' },
+              { value: 5, name: '离开座位' },
+              { value: 2, name: '座位打闹' },
+              { value: 7, name: '四处跑动' },
               { value: 3, name: '下蹲' }
             ]
           }]
@@ -70,9 +70,6 @@ Page({
       }
     }
   },
-
-
-
 
   onTimeChange(e) {
     this.setData({ timeIndex: e.detail.value });

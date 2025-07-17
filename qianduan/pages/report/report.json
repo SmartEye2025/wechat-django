@@ -1,5 +1,9 @@
 {
   "usingComponents": {
+    
     "ec-canvas": "../../ec-canvas/ec-canvas"
-  }
+    
+  },
+  "navigationBarTitleText": "孩子课堂表现报告"
 }
+
