@@ -35,14 +35,14 @@
                 <text class="status-label">状态:</text>
                 <text class="status-value {{connectionStatus === '流传输中' ? 'success' : 'warning'}}">{{connectionStatus}}</text>
               </view>
-              <view class="status-item" wx:if="{{fps > 0}}">
+              <!-- <view class="status-item" wx:if="{{fps > 0}}">
                 <text class="status-label">FPS:</text>
                 <text class="status-value">{{fps}}</text>
               </view>
               <view class="status-item">
                 <text class="status-label">帧数:</text>
                 <text class="status-value">{{frameIndex}}</text>
-              </view>
+              </view> -->
             </view>
           </view>
           
@@ -64,7 +64,7 @@
             </view>
           </view>
           
-          <view class="control-center">
+          <!-- <view class="control-center">
             <text class="time-display">帧 {{frameIndex}}</text>
             <text class="fps-display" wx:if="{{fps > 0}}">{{fps}} FPS</text>
           </view>
@@ -76,7 +76,7 @@
             <view class="control-btn-mini" bindtap="requestSingleFrame">
               <text>📷</text>
             </view>
-          </view>
+          </view> -->
         </view>
       </view>
       
@@ -100,7 +100,7 @@
           <text class="btn-label">{{isConnected ? '断开' : '连接'}}</text>
         </button>
         
-        <button class="panel-btn secondary" bindtap="requestSingleFrame" wx:if="{{isConnected}}">
+        <!-- <button class="panel-btn secondary" bindtap="requestSingleFrame" wx:if="{{isConnected}}">
           <text class="btn-icon">📷</text>
           <text class="btn-label">单帧</text>
         </button>
@@ -113,11 +113,11 @@
         <button class="panel-btn secondary" bindtap="viewHistory">
           <text class="btn-icon">📋</text>
           <text class="btn-label">历史</text>
-        </button>
+        </button> -->
       </view>
       
       <!-- 设备信息 -->
-      <view class="device-info" wx:if="{{isConnected}}">
+      <!-- <view class="device-info" wx:if="{{isConnected}}">
         <view class="info-item">
           <text class="info-label">设备类型:</text>
           <text class="info-value">升腾设备</text>
@@ -126,7 +126,7 @@
           <text class="info-label">连接时间:</text>
           <text class="info-value">{{frameIndex > 0 ? '实时' : '待机'}}</text>
         </view>
-      </view>
+      </view> -->
     </view>
   </view>
 </view>
