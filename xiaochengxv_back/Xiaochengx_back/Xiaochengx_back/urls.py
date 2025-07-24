@@ -39,7 +39,7 @@ urlpatterns = [
     path('api/get-binding-info/', views.get_binding_info, name='get_binding_info'),
     path('api/add-student/', views.add_student, name='add_student'),
     path('api/get-student-info/', views.get_student_info, name='get_student_info'),
-    path('api/list-students/', views.list_students, name='list_students'),
+    path('api/list-students/', views.list_students, name='list_students')
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # 添加媒体文件的访问路径

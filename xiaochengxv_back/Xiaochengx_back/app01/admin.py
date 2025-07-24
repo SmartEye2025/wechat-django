@@ -11,9 +11,8 @@ class UserAdmin(admin.ModelAdmin):
 
 @admin.register(Student)
 class StudentAdmin(admin.ModelAdmin):
-    list_display = ('student_id', 'name', 'grade', 'class_name')
+    list_display = ('student_id', 'name')
     search_fields = ('student_id', 'name')
-    list_filter = ('grade', 'class_name')
 
 
 @admin.register(ParentStudentBinding)

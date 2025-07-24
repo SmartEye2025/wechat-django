@@ -82,9 +82,9 @@ ASGI_APPLICATION = 'Xiaochengx_back.asgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'new_xiaochengxu_db',  # 数据库名称
+        'NAME': 'wxsmarteye_db',  # 数据库名称
         'USER': 'root',  # 数据库用户名
-        'PASSWORD': '1346286832LYS',  # 数据库密码
+        'PASSWORD': 'fd@&ab.17E9Q',  # 数据库密码
         'HOST': 'localhost',
         'PORT': '3306',
     }

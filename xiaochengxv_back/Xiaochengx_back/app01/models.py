@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Manager
 from django.contrib.auth.models import AbstractUser
 import os
 import uuid
@@ -57,16 +58,30 @@ class ParentStudentBinding(models.Model):
 
 # 学生信息表
 class Student(models.Model):
-    student_id = models.CharField(max_length=20, unique=True, verbose_name='学号')
-    name = models.CharField(max_length=50, verbose_name='姓名')
-    grade = models.CharField(max_length=20, blank=True, null=True, verbose_name='年级')
-    class_name = models.CharField(max_length=20, blank=True, null=True, verbose_name='班级')
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
-    updated_at = models.DateTimeField(auto_now=True, verbose_name='更新时间')
-
-    class Meta:
-        verbose_name = '学生信息'
-        verbose_name_plural = '学生信息管理'
+    object = Manager
+    name = models.CharField(max_length=20, verbose_name="姓名")
+    student_id = models.CharField(max_length=20,verbose_name="学生ID")
+    uwb_id = models.CharField(max_length=20, verbose_name="UWB定位标签id")
+    age = models.IntegerField(verbose_name="年龄",default=0)
+    speciality = models.CharField(max_length=100,default="无",verbose_name="特殊需求")
+    seat_x = models.FloatField(default=0.,verbose_name="座位横坐标")
+    seat_y = models.FloatField(default=0., verbose_name="座位纵坐标")
 
     def __str__(self):
-        return f"{self.student_id} - {self.name}"
+        return self.student_id
+
+# 行为统计表
+class Behavior(models.Model):
+    object = Manager
+    date = models.DateTimeField(auto_now_add=True)
+
+    walk = models.IntegerField(verbose_name="走动",default=0)
+    run = models.IntegerField(verbose_name="跑动",default=0)
+    lookAround = models.IntegerField(verbose_name="东张西望", default=0)
+    offSeat = models.IntegerField(verbose_name="离座", default=0)
+    sleeping = models.IntegerField(verbose_name="瞌睡", default=0)
+    handup = models.IntegerField(verbose_name="举手", default=0)
+    standup = models.IntegerField(verbose_name="起立", default=0)
+
+    def __str__(self):
+        return self.date

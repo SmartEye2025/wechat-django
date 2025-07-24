@@ -1,19 +1,13 @@
-from django.shortcuts import render,HttpResponse, redirect
+from django.shortcuts import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 from django.utils import timezone
-from rest_framework_simplejwt.models import TokenUser
 
 from .models import ParentStudentBinding
 from .models import User
 from .models import Student
-from rest_framework.decorators import api_view, authentication_classes, permission_classes
-from rest_framework.response import Response
-from rest_framework import status
-from rest_framework.authentication import TokenAuthentication
-from rest_framework.permissions import IsAuthenticated
 
 
 import json
@@ -21,7 +15,6 @@ import random
 import re
 import os
 from django.conf import settings
-from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -111,12 +104,12 @@ def register(request):
                     'message': '请先获取验证码'
                 }, status=400)
             
-            # 验证码校验
-            if not user.is_verification_code_valid(code):
-                return JsonResponse({
-                    'status': 'error', 
-                    'message': '验证码错误或已过期'
-                }, status=400)
+            # # 验证码校验
+            # if not user.is_verification_code_valid(code):
+            #     return JsonResponse({
+            #         'status': 'error',
+            #         'message': '验证码错误或已过期'
+            #     }, status=400)
             
             # 设置用户信息
             user.set_password(password)
@@ -538,9 +531,7 @@ def add_student(request):
                 'message': '学生信息添加成功',
                 'data': {
                     'student_id': student.student_id,
-                    'name': student.name,
-                    'grade': student.grade,
-                    'class_name': student.class_name
+                    'name': student.name
                 }
             })
 
@@ -572,9 +563,7 @@ def get_student_info(request):
                     'status': 'success',
                     'data': {
                         'student_id': student.student_id,
-                        'name': student.name,
-                        'grade': student.grade,
-                        'class_name': student.class_name
+                        'name': student.name
                     }
                 })
             except Student.DoesNotExist:
@@ -611,9 +600,7 @@ def list_students(request):
             for student in students:
                 students_data.append({
                     'student_id': student.student_id,
-                    'name': student.name,
-                    'grade': student.grade,
-                    'class_name': student.class_name
+                    'name': student.name
                 })
 
             return JsonResponse({

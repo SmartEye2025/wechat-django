@@ -29,6 +29,7 @@ Page({
    */
   onLoad: function (options) {
     console.log('监控页面加载');
+    this.toggleConnection();
     // 设置默认图片
     this.setData({
       currentFrame: this.data.mockFrames[0]
@@ -42,6 +43,29 @@ Page({
     console.log('监控页面显示');
   },
 
+// 最可靠的 Base64 编码实现
+arrayBufferToBase64:function(arrayBuffer) {
+  const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+  const bytes = new Uint8Array(arrayBuffer);
+  let result = '';
+  
+  for (let i = 0; i < bytes.length; i += 3) {
+    // 每次处理3个字节（24bit）
+    const byte1 = bytes[i];
+    const byte2 = bytes[i + 1];
+    const byte3 = bytes[i + 2];
+    
+    // 转换为4个Base64字符
+    const char1 = CHARS[byte1 >> 2];
+    const char2 = CHARS[((byte1 & 3) << 4) | (byte2 >> 4)];
+    const char3 = isNaN(byte2) ? '=' : CHARS[((byte2 & 15) << 2) | (byte3 >> 6)];
+    const char4 = isNaN(byte3) ? '=' : CHARS[byte3 & 63];
+    
+    result += char1 + char2 + char3 + char4;
+  }
+  
+  return result;
+},
   /**
    * 开始/停止监控
    */
@@ -68,7 +92,7 @@ Page({
       });
 
       const ws = wx.connectSocket({
-        url: 'ws://127.0.0.1:8000/ws/ascend/',
+        url: 'ws://192.168.1.2:8001/ws/video/',
       });
 
       ws.onOpen(() => {
@@ -79,62 +103,17 @@ Page({
           connectionStatus: '已连接'
         });
         wx.showToast({ title: '监控已启动', icon: 'success' });
-
-        // 连接成功后，发送开始流请求
-        ws.send({
-          data: JSON.stringify({
-            type: 'start_stream'
-          })
-        });
       });
 
       ws.onMessage((msg) => {
         try {
-          const data = JSON.parse(msg.data);
-          console.log('收到WebSocket消息:', data.type);
-
-          if (data.type === 'frame') {
+          if (msg.data instanceof ArrayBuffer) {
+            console.log('收到WebSocket消息:', msg.data);
             // 接收到图片帧数据
+            // const base64 = wx.arrayBufferToBase64(msg.data);
+            const base64 = this.arrayBufferToBase64(msg.data);
             this.setData({
-              currentFrame: data.image_data,
-              frameIndex: data.frame_index,
-              fps: data.fps || 0
-            });
-          } else if (data.type === 'stream_started') {
-            console.log('Stream started:', data.message);
-            this.setData({
-              connectionStatus: '流传输中',
-              errorMessage: ''
-            });
-          } else if (data.type === 'stream_stopped') {
-            console.log('Stream stopped:', data.message);
-            this.setData({
-              connectionStatus: '流已停止',
-              isPlaying: false
-            });
-          } else if (data.type === 'single_frame') {
-            // 接收到单帧图片
-            this.setData({
-              currentFrame: data.image_data,
-              timestamp: data.timestamp
-            });
-          } else if (data.type === 'error') {
-            // 处理错误消息
-            console.error('后端错误:', data.message);
-            this.setData({
-              errorMessage: data.message,
-              connectionStatus: '连接错误'
-            });
-            wx.showToast({
-              title: data.message,
-              icon: 'none',
-              duration: 3000
-            });
-          } else if (data.type === 'config_success') {
-            // 配置成功
-            wx.showToast({
-              title: data.message,
-              icon: 'success'
+              currentFrame: `data:image/jpeg;base64,${base64}`,
             });
           }
         } catch (e) {
@@ -353,3 +332,5 @@ Page({
     console.log('上拉触底');
   }
 }); 
+
+
