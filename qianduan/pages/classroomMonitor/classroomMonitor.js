@@ -95,8 +95,25 @@ arrayBufferToBase64:function(arrayBuffer) {
         url: 'ws://192.168.1.2:8001/ws/video/',
       });
 
+      const timeout = 20000;
+      const timeoutTimer = setTimeout(() => {
+        if (this.data.connectionStatus === '连接中...') {
+          // 如果连接仍在连接中状态，说明连接超时
+          ws.close(); // 关闭WebSocket
+          this.setData({
+            isConnected: false,
+            isPlaying: false,
+            ws: null,
+            connectionStatus: '连接超时',
+            errorMessage: '连接超时'
+          });
+          wx.showToast({ title: '连接超时', icon: 'none' });
+        }
+      }, timeout);
+
       ws.onOpen(() => {
         console.log('WebSocket connected');
+        clearTimeout(timeoutTimer);
         this.setData({
           isConnected: true,
           isPlaying: true,
