@@ -18,15 +18,15 @@ Page({
 
     // 图表数据
     weeklyData: {
-      focus_time: [4.6, 2.4, 6, 4.6, 7.2, 5.6, 4.8],
-      distraction_count: [12, 16, 10, 8, 6, 9, 7]
+      focus_time: [4.6, 2.4, 6, 4.6, 7.2],
+      distraction_count: [12, 16, 10, 8, 6]
     },
     distraction_types: [
-      { type: '频繁扭动', count: 10 },
-      { type: '离开座位', count: 5 },
-      { type: '座位打闹', count: 2 },
-      { type: '四处跑动', count: 7 },
-      { type: '下蹲', count: 3 }
+      { type: '离座', count: 1 },
+      { type: '起立', count: 1 },
+      { type: '东张西望', count: 1 },
+      { type: '多动', count: 1 },
+      { type: '瞌睡', count: 1 }
     ],
 
     // 图表配置
