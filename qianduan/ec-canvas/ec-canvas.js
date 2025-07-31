@@ -112,9 +112,13 @@ Component({
       ctx = wx.createCanvasContext(this.data.canvasId, this);
       const canvas = new WxCanvas(ctx, this.data.canvasId, false);
 
-      echarts.setCanvasCreator(() => {
-        return canvas;
-      });
+      if (echarts.setPlatformAPI) {
+        echarts.setPlatformAPI({
+          createCanvas: () => canvas,
+        });
+      } else {
+        echarts.setCanvasCreator(() => canvas);
+      };
       // const canvasDpr = wx.getSystemInfoSync().pixelRatio // 微信旧的canvas不能传入dpr
       const canvasDpr = 1
       var query = wx.createSelectorQuery().in(this);
@@ -153,9 +157,24 @@ Component({
           const ctx = canvasNode.getContext('2d')
 
           const canvas = new WxCanvas(ctx, this.data.canvasId, true, canvasNode)
-          echarts.setCanvasCreator(() => {
-            return canvas
-          })
+          if (echarts.setPlatformAPI) {
+            echarts.setPlatformAPI({
+              createCanvas: () => canvas,
+              loadImage: (src, onload, onerror) => {
+                if (canvasNode.createImage) {
+                  const image = canvasNode.createImage();
+                  image.onload = onload;
+                  image.onerror = onerror;
+                  image.src = src;
+                  return image;
+                }
+                console.error('加载图片依赖 `Canvas.createImage()` API，要求小程序基础库版本在 2.7.0 及以上。');
+                // PENDING fallback?
+              }
+            })
+          } else {
+            echarts.setCanvasCreator(() => canvas)
+          }
 
           if (typeof callback === 'function') {
             this.chart = callback(canvas, canvasWidth, canvasHeight, canvasDpr)
@@ -200,11 +219,17 @@ Component({
         var handler = this.chart.getZr().handler;
         handler.dispatch('mousedown', {
           zrX: touch.x,
-          zrY: touch.y
+          zrY: touch.y,
+          preventDefault: () => {},
+          stopImmediatePropagation: () => {},
+          stopPropagation: () => {}
         });
         handler.dispatch('mousemove', {
           zrX: touch.x,
-          zrY: touch.y
+          zrY: touch.y,
+          preventDefault: () => {},
+          stopImmediatePropagation: () => {},
+          stopPropagation: () => {}
         });
         handler.processGesture(wrapTouch(e), 'start');
       }
@@ -216,7 +241,10 @@ Component({
         var handler = this.chart.getZr().handler;
         handler.dispatch('mousemove', {
           zrX: touch.x,
-          zrY: touch.y
+          zrY: touch.y,
+          preventDefault: () => {},
+          stopImmediatePropagation: () => {},
+          stopPropagation: () => {}
         });
         handler.processGesture(wrapTouch(e), 'change');
       }
@@ -228,11 +256,17 @@ Component({
         var handler = this.chart.getZr().handler;
         handler.dispatch('mouseup', {
           zrX: touch.x,
-          zrY: touch.y
+          zrY: touch.y,
+          preventDefault: () => {},
+          stopImmediatePropagation: () => {},
+          stopPropagation: () => {}
         });
         handler.dispatch('click', {
           zrX: touch.x,
-          zrY: touch.y
+          zrY: touch.y,
+          preventDefault: () => {},
+          stopImmediatePropagation: () => {},
+          stopPropagation: () => {}
         });
         handler.processGesture(wrapTouch(e), 'end');
       }

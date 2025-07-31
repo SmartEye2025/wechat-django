@@ -4,11 +4,11 @@
 
   <!-- 筛选栏 -->
   <view class="filter-bar">
-    <picker mode="selector" range="{{timeRanges}}" value="{{timeIndex}}" bindchange="onTimeChange">
-      <view class="filter-item">{{timeRanges[timeIndex]}}</view>
+    <picker mode="selector" range="{{time_ranges}}" value="{{time_index}}" bindchange="onTimeChange">
+      <view class="filter-item">{{time_ranges[time_index]}}</view>
     </picker>
-    <picker mode="selector" range="{{classes}}" value="{{classIndex}}" bindchange="onClassChange">
-      <view class="filter-item">{{classes[classIndex]}}</view>
+    <picker mode="selector" range="{{subjects}}" value="{{subject_index}}" bindchange="onSubjectChange">
+      <view class="filter-item">{{subjects[subject_index]}}</view>
     </picker>
     <button class="filter-btn" bindtap="onFilter">应用筛选</button>
   </view>
@@ -17,18 +17,18 @@
   <view class="stat-cards">
     <view class="stat-card">
       <text class="stat-title">平均专注时长</text>
-      <text class="stat-value">{{focusTime}}分钟</text>
-      <text class="stat-trend positive">+{{focusTrend}}%</text>
+      <text class="stat-value">{{focus_time}}分钟</text>
+      <text class="stat-trend positive">+{{focus_trend}}%</text>
     </view>
     <view class="stat-card">
       <text class="stat-title">离座次数</text>
-      <text class="stat-value">{{leaveCount}}</text>
-      <text class="stat-trend negative">{{leaveTrend}}%</text>
+      <text class="stat-value">{{leave_count}}</text>
+      <text class="stat-trend negative">{{leave_trend}}%</text>
     </view>
     <view class="stat-card">
       <text class="stat-title">举手次数</text>
-      <text class="stat-value">{{handupRate}}</text>
-      <text class="stat-trend positive">+{{handupTrend}}%</text>
+      <text class="stat-value">{{handup_count}}</text>
+      <text class="stat-trend positive">+{{handup_trend}}%</text>
     </view>
   </view>
 
@@ -36,7 +36,7 @@
   <view class="charts-column">
     <view class="chart-box">
       <text class="chart-title">孩子课堂专注力趋势</text>
-      <ec-canvas id="barChart" canvas-id="barChart" ec="{{ecBar}}" style="width:100%;height:400rpx;"></ec-canvas>
+      <ec-canvas id="lineChart" canvas-id="lineChart" ec="{{ecLine}}" style="width:100%;height:400rpx;"></ec-canvas>
     </view>
     <view class="chart-box">
       <text class="chart-title">孩子注意力分散情况分析</text>
