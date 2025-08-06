@@ -1,5 +1,5 @@
 import * as echarts from '../../ec-canvas/echarts';
-
+const app = getApp()
 Page({
   data: {
     // 筛选
@@ -139,7 +139,7 @@ Page({
   getStatistics(time_range, subject) {
     console.log('请求统计数据:', time_range, subject);
     wx.request({
-      url: 'http://localhost:8000/statistics/',
+      url: app.globalData.URL+'statistics/',
       method: 'GET',
       data: {
         time_range: time_range,
@@ -175,7 +175,7 @@ Page({
   getWeeklyData(time_range, subject) {
     console.log('请求周数据:', time_range, subject);
     wx.request({
-      url: 'http://localhost:8000/weekly_data/',
+      url: app.globalData.URL+'weekly_data/',
       method: 'GET',
       data: {
         time_range: time_range,
@@ -211,7 +211,7 @@ Page({
   getDistractionTypes(time_range, subject) {
     console.log('请求注意力分散类型数据:', time_range, subject);
     wx.request({
-      url: 'http://localhost:8000/distraction_types/',
+      url: app.globalData.URL+'distraction_types/',
       method: 'GET',
       data: {
         time_range: time_range,

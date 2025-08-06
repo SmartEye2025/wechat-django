@@ -1,3 +1,4 @@
+const app = getApp()
 Page({
   data: {
     username: '',
@@ -88,7 +89,7 @@ Page({
 
     // 真实的网络请求
     wx.request({
-      url: 'http://localhost:8000/login/', // 后端登录接口
+      url: app.globalData.URL+'login/', // 后端登录接口
       method: 'POST',
       data: {
         username: username,

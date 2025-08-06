@@ -1,3 +1,4 @@
+const app = getApp()
 Page({
   data: {
     phone: '',
@@ -117,7 +118,7 @@ Page({
     });
 
     wx.request({
-      url: 'http://localhost:8000/send_code/',
+      url: app.globalData.URL+'send_code/',
       method: 'POST',
       data: { phone: phone },
       success: (res) => {
@@ -196,7 +197,7 @@ Page({
     });
 
     wx.request({
-      url: 'http://localhost:8000/register/',
+      url: app.globalData.URL+'register/',
       method: 'POST',
       data: {
         phone: phone,

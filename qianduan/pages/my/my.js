@@ -1,4 +1,5 @@
 // pages/my/my.js
+const app = getApp()
 Page({
   data: {
     userInfo: null,
@@ -35,7 +36,7 @@ Page({
     if(!this.data.userInfo) return;
     console.log('正在加载绑定信息...');
     wx.request({
-      url:'http://127.0.0.1:8000/get_binding_info/',
+      url:app.globalData.URL+'get_binding_info/',
       method:'GET',
       data:{
         username:this.data.userInfo.username,
@@ -108,7 +109,7 @@ Page({
           
           // 发送绑定请求
           wx.request({
-            url: 'http://127.0.0.1:8000/bind_student/',
+            url: app.globalData.URL+'bind_student/',
             method: 'POST',
             data: {
               username:this.data.userInfo.username,
@@ -169,7 +170,7 @@ Page({
           });
           
           wx.request({
-            url: 'http://127.0.0.1:8000/unbind_student/',
+            url: app.globalData.URL+'unbind_student/',
             method: 'POST',
             data: {
               username:this.data.userInfo.username,
@@ -231,7 +232,7 @@ Page({
 
         // 上传头像至后端
         wx.uploadFile({
-          url: 'http://127.0.0.1:8000/update_profile/',  // 后端更新用户资料的接口
+          url: app.globalData.URL+'update_profile/',  // 后端更新用户资料的接口
           filePath: avatar,
           name: 'avatar',  // 文件字段名称必须与后端一致
           formData: {
@@ -298,7 +299,7 @@ Page({
           const newNickname = res.content;
           // 发送修改昵称的请求到后端
           wx.request({
-            url: 'http://127.0.0.1:8000/update_profile/',
+            url: app.globalData.URL+'update_profile/',
             method: 'POST',
             header: {
               'content-type': 'application/x-www-form-urlencoded'

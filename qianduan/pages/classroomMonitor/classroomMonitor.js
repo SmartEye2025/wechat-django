@@ -1,4 +1,5 @@
 // pages/classroomMonitor/classroomMonitor.js
+const app = getApp()
 Page({
   /**
    * 页面的初始数据
@@ -92,7 +93,7 @@ arrayBufferToBase64:function(arrayBuffer) {
       });
 
       const ws = wx.connectSocket({
-        url: 'ws://192.168.1.2:8001/ws/video/',
+        url: 'ws://43.138.252.29:8001/ws/video/',
       });
 
       const timeout = 20000;
@@ -303,7 +304,7 @@ arrayBufferToBase64:function(arrayBuffer) {
    */
   handleLoadUser: function () {
     wx.request({
-      url: 'http://localhost:8000/index/',
+      url: app.globalData.URL+'index/',
       method: 'GET',
       data: {},
       header: {},
