@@ -2,13 +2,16 @@
 const app = getApp()
 Page({
   data: {
-    userInfo: null,
-    nickname: '',   // 存储修改的昵称
+    userInfo: {
+      nickName: '小明爸爸',
+      username: 'parent_test'
+    },
+    nickname: '小明爸爸',   // 存储修改的昵称
     avatar: '',     // 存储修改的头像
     bindingInfo:{
-      has_binding:false,
-      student_id:'',
-      student_name:''
+      has_binding:true,
+      student_id:'1',
+      student_name:'小明'
     }
   },
 

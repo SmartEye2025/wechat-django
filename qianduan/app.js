@@ -1,8 +1,8 @@
 // app.js
 App({
   globalData: {
-    URL: 'http://localhost:8000/', //43.138.252.29:8001
-    username: ''
+    URL: 'http://43.138.252.29:8001/', //43.138.252.29:8001
+    username: 'parent_test'
   },
   
   onLaunch() {
