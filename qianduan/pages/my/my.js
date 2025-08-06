@@ -13,6 +13,9 @@ Page({
   },
 
   onLoad: function () {
+    // 确保username正确设置
+    app.ensureUsername();
+    
     // 获取用户信息，假设从缓存或其他地方获取
     const userInfo = wx.getStorageSync('userInfo');
     if (userInfo && userInfo.isLoggedIn) {

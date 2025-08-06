@@ -101,6 +101,10 @@ Page({
 
   onLoad() {
     console.log('页面加载');
+    
+    // 确保username正确设置
+    app.ensureUsername();
+    
     // 先显示默认数据，然后尝试加载真实数据
     this.loadReportData();
   },
@@ -108,8 +112,19 @@ Page({
   // 加载报告数据
   loadReportData() {
     console.log('开始加载报告数据');
+    
+    // 确保username正确设置
+    if (!app.ensureUsername()) {
+      wx.showToast({
+        title: '请先登录',
+        icon: 'none'
+      });
+      return; // 终止后续请求
+    }
+    
     const time_range = this.data.time_ranges[this.data.time_index];
     const subject = this.data.subjects[this.data.subject_index];
+    const username = app.globalData.username;
     
     wx.showLoading({ title: '加载中...' });
     
@@ -118,11 +133,11 @@ Page({
     this.totalRequests = 3;
     
     // 获取统计数据
-    this.getStatistics(time_range, subject);
+    this.getStatistics(time_range, subject, username);
     // 获取周数据
-    this.getWeeklyData(time_range, subject);
+    this.getWeeklyData(time_range, subject, username);
     // 获取注意力分散类型数据
-    this.getDistractionTypes(time_range, subject);
+    this.getDistractionTypes(time_range, subject, username);
   },
 
   // 检查是否所有请求都完成
@@ -136,14 +151,15 @@ Page({
   },
 
   // 获取统计数据
-  getStatistics(time_range, subject) {
+  getStatistics(time_range, subject, username) {
     console.log('请求统计数据:', time_range, subject);
     wx.request({
       url: app.globalData.URL+'statistics/',
       method: 'GET',
       data: {
         time_range: time_range,
-        subject: subject
+        subject: subject,
+        username: username
       },
       success: (res) => {
         console.log('统计数据响应:', res.data);
@@ -172,14 +188,15 @@ Page({
   },
 
   // 获取周数据
-  getWeeklyData(time_range, subject) {
+  getWeeklyData(time_range, subject, username) {
     console.log('请求周数据:', time_range, subject);
     wx.request({
       url: app.globalData.URL+'weekly_data/',
       method: 'GET',
       data: {
         time_range: time_range,
-        subject: subject
+        subject: subject,
+        username: username
       },
       success: (res) => {
         console.log('周数据响应:', res.data);
@@ -208,14 +225,15 @@ Page({
   },
 
   // 获取注意力分散类型数据
-  getDistractionTypes(time_range, subject) {
+  getDistractionTypes(time_range, subject, username) {
     console.log('请求注意力分散类型数据:', time_range, subject);
     wx.request({
       url: app.globalData.URL+'distraction_types/',
       method: 'GET',
       data: {
         time_range: time_range,
-        subject: subject
+        subject: subject,
+        username: username
       },
       success: (res) => {
         console.log('注意力分散类型数据响应:', res.data);

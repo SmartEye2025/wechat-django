@@ -12,15 +12,15 @@
       </view>
       <view class="user-info">
         <text class="nickname">
-          {{userInfo ? userInfo.nickName : '张三'}}
+          {{userInfo ? userInfo.nickName : '用户名'}}
         </text>
         <text class="user-desc">
-          {{userInfo ? '欢迎回来' : '欢迎回来'}}
+          {{userInfo ? '欢迎回来' : '登录后查看更多信息'}}
         </text>
       </view>
-      <!-- <view wx:if="{{!userInfo}}" class="login-btn" bindtap="goLogin">
+      <view wx:if="{{!userInfo}}" class="login-btn" bindtap="goLogin">
         <text>登录</text>
-      </view> -->
+      </view>
     </view>
   </view>
 

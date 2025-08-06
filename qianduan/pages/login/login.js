@@ -87,7 +87,7 @@ Page({
       mask: true
     });
 
-    // 真实的网络请求
+    // 请求
     wx.request({
       url: app.globalData.URL+'login/', // 后端登录接口
       method: 'POST',
@@ -100,11 +100,22 @@ Page({
       },
       success: (res) => {
         wx.hideLoading();
-
+        
+        // 确保使用服务器返回的标准用户名
+        const serverUsername = res.data.user?.username;
+        const localUsername = this.data.username;
+        
         if (res.data.status === 'success') {
+          // 优先使用服务器返回的用户名，如果没有则使用本地输入的用户名
+          const finalUsername = serverUsername || localUsername;
+          
+          // 设置全局username
+          app.globalData.username = finalUsername;
+          console.log('设置全局username:', finalUsername);
+          
           wx.setStorageSync('userInfo', {
-            username: res.data.user.username,
-            nickName: res.data.user.nickname || res.data.user.username,
+            username: finalUsername,
+            nickName: res.data.user.nickname || finalUsername,
             avatarUrl: '/images/avatar1.png',
             isLoggedIn: true
           });
@@ -133,6 +144,7 @@ Page({
   onLoad: function () {
     const userInfo = wx.getStorageSync('userInfo');
     if (userInfo && userInfo.isLoggedIn) {
+      app.globalData.username = userInfo.username;
       wx.switchTab({
         url: '/pages/my/my'
       });

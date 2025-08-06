@@ -30,6 +30,10 @@ Page({
    */
   onLoad: function (options) {
     console.log('监控页面加载');
+    
+    // 确保username正确设置
+    app.ensureUsername();
+    
     this.toggleConnection();
     // 设置默认图片
     this.setData({
